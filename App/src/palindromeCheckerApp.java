@@ -1,58 +1,61 @@
+import java.util.LinkedList;
+
 /**
- * Use Case 10: Normalized Palindrome Validation
+ * MAIN CLASS: UseCase8PalindromeCheckerApp
+ * Use Case 8: Linked List Based Palindrome Checker
+ *
  * Description:
- * This class validates a palindrome after preprocessing
- * the input string.
+ * This class checks whether a string is a palindrome
+ * using a LinkedList.
+ * Characters are added to the list and then compared
+ * by removing elements from both ends:
+ *    - removeFirst()
+ *    - removeLast()
  *
- * Normalization includes:
- * 1. Removing spaces and symbols
- * 2. Converting to lowercase
- *
- * This ensures the palindrome check is logical rather
- * than character-format dependent.
- *
- * Example:
- * "A man a plan a canal Panama"
+ * This demonstrates how LinkedList supports
+ * double-ended operations for symmetric validation.
  *
  * @author Developer
- * @version 10.0
+ * @version 8.0
  */
 
-import java.util.Scanner;
-
-public class palindromeCheckerApp {
+public class palindromeCheckerApp{
 
     /**
-     * Application entry point for UC10
-     * @param args Command-line arguments
+     * Application entry point for UC8.
+     * @param args Command Line arguments
      */
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
+        // Define the input string
+        String input = "level";
 
-        System.out.print("Input: ");
-        String input = scanner.nextLine();
+        System.out.println("Input: " + input);
 
-        // Step 1: Normalize string
-        String normalized = input.replaceAll("[^a-zA-Z0-9]", "")
-                .toLowerCase();
+        // Create a LinkedList to store characters
+        LinkedList<Character> list = new LinkedList<>();
 
-        // Step 2: Apply palindrome logic
+        // Add each character to the linked list
+        for (char c : input.toCharArray()) {
+            list.add(c);
+        }
+
+        // Flag to track palindrome state
         boolean isPalindrome = true;
 
-        for (int i = 0; i < normalized.length() / 2; i++) {
+        // Compare until only one or zero elements remain
+        while (list.size() > 1) {
 
-            // Compare symmetric characters
-            if (normalized.charAt(i) !=
-                    normalized.charAt(normalized.length() - 1 - i)) {
+            char first = list.removeFirst();
+            char last = list.removeLast();
+
+            if (first != last) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        System.out.println("Is Palindrome?");
-        System.out.println(isPalindrome);
-
-        scanner.close();
+        // Display result
+        System.out.println("Is Palindrome?: " + isPalindrome);
     }
 }
