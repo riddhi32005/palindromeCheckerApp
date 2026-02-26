@@ -1,19 +1,23 @@
+
 /**
- * MAIN CLASS: UseCase11PalindromeCheckerApp
- * Use Case 11: Object-Oriented Palindrome Service
+ * MAIN CLASS: UseCase13PalindromeCheckerApp
+ * Use Case 13: Performance Comparison
  *
  * Description:
- * This class demonstrates object-oriented design.
- * The palindrome logic is encapsulated inside
- * a separate service class.
+ * This class measures and compares the execution performance
+ * of palindrome validation algorithms.
  *
- * This proves:
- *  - Reusability
- *  - Encapsulation
- *  - Clean architecture design
+ * At this stage, the application:
+ *  - Uses a palindrome strategy implementation
+ *  - Captures execution start and end time
+ *  - Calculates total execution duration
+ *  - Displays benchmarking results
+ *
+ * This use case focuses purely on performance measurement
+ * and algorithm comparison concepts.
  *
  * @author Developer
- * @version 11.0
+ * @version 13.0
  */
 
 public class palindromeCheckerApp {
@@ -24,40 +28,29 @@ public class palindromeCheckerApp {
      */
     public static void main(String[] args) {
 
-        String input = "racecar";
+        String input = "level";
         System.out.println("Input: " + input);
 
-        // Create service object
-        PalindromeService service = new PalindromeService();
+        long startTime = System.nanoTime();
 
-        boolean result = service.checkPalindrome(input);
+        boolean result = checkPalindrome(input);
+
+        long endTime = System.nanoTime();
+
+        long executionTime = endTime - startTime;
 
         System.out.println("Is Palindrome?: " + result);
+        System.out.println("Execution Time: " + executionTime + " ns");
     }
-}
-
-/**
- * Service class that contains palindrome logic.
- */
-class PalindromeService {
 
     /**
-     * Checks whether the input string is a palindrome.
-     *
-     * @param input String to check
-     * @return true if palindrome, false otherwise
+     * Simple Two-Pointer Palindrome Algorithm
      */
-    public boolean checkPalindrome(String input) {
+    private static boolean checkPalindrome(String input) {
 
-        if (input == null) {
-            return false;
-        }
-
-        // Initialize pointers
         int start = 0;
         int end = input.length() - 1;
 
-        // Compare characters using two-pointer technique
         while (start < end) {
 
             if (input.charAt(start) != input.charAt(end)) {
