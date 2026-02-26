@@ -1,16 +1,21 @@
 /**
- * Use Case 9: Recursive Palindrome Checker
+ * Use Case 10: Normalized Palindrome Validation
  * Description:
- * This class validates a palindrome using recursion.
- * Characters are compared from the outer positions moving inward.
- * The recursion stops when:
- * 1. All characters are matched, or
- * 2. A mismatch is found.
+ * This class validates a palindrome after preprocessing
+ * the input string.
  *
- * This use case demonstrates divide-and-conquer logic using method recursion.
+ * Normalization includes:
+ * 1. Removing spaces and symbols
+ * 2. Converting to lowercase
+ *
+ * This ensures the palindrome check is logical rather
+ * than character-format dependent.
+ *
+ * Example:
+ * "A man a plan a canal Panama"
  *
  * @author Developer
- * @version 9.0
+ * @version 10.0
  */
 
 import java.util.Scanner;
@@ -18,7 +23,7 @@ import java.util.Scanner;
 public class palindromeCheckerApp {
 
     /**
-     * Application entry point for UC9
+     * Application entry point for UC10
      * @param args Command-line arguments
      */
     public static void main(String[] args) {
@@ -28,34 +33,26 @@ public class palindromeCheckerApp {
         System.out.print("Input: ");
         String input = scanner.nextLine();
 
-        boolean result = check(input, 0, input.length() - 1);
+        // Step 1: Normalize string
+        String normalized = input.replaceAll("[^a-zA-Z0-9]", "")
+                .toLowerCase();
+
+        // Step 2: Apply palindrome logic
+        boolean isPalindrome = true;
+
+        for (int i = 0; i < normalized.length() / 2; i++) {
+
+            // Compare symmetric characters
+            if (normalized.charAt(i) !=
+                    normalized.charAt(normalized.length() - 1 - i)) {
+                isPalindrome = false;
+                break;
+            }
+        }
 
         System.out.println("Is Palindrome?");
-        System.out.println(result);
+        System.out.println(isPalindrome);
 
         scanner.close();
-    }
-
-    /**
-     * Recursively checks whether a string is a palindrome
-     * @param s Input string
-     * @param start Starting index
-     * @param end Ending index
-     * @return true if palindrome, otherwise false
-     */
-    private static boolean check(String s, int start, int end) {
-
-        // Base condition: If start >= end, all characters matched
-        if (start >= end) {
-            return true;
-        }
-
-        // If mismatch found
-        if (s.charAt(start) != s.charAt(end)) {
-            return false;
-        }
-
-        // Recursive call moving inward
-        return check(s, start + 1, end - 1);
     }
 }
