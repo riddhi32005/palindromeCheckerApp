@@ -1,59 +1,61 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
-
 /**
- * MAIN CLASS: UseCase7PalindromeCheckerApp
- * Use Case 7: Deque Based Optimized Palindrome Checker
- *
+ * Use Case 9: Recursive Palindrome Checker
  * Description:
- * This class validates a palindrome using a Deque (Double Ended Queue).
- * Characters are inserted into the deque and then compared by removing
- * elements from both ends using:
- *    - removeFirst()
- *    - removeLast()
+ * This class validates a palindrome using recursion.
+ * Characters are compared from the outer positions moving inward.
+ * The recursion stops when:
+ * 1. All characters are matched, or
+ * 2. A mismatch is found.
  *
- * This avoids reversing the string and provides an efficient
- * front-to-back comparison approach.
+ * This use case demonstrates divide-and-conquer logic using method recursion.
  *
  * @author Developer
- * @version 7.0
+ * @version 9.0
  */
+
+import java.util.Scanner;
 
 public class palindromeCheckerApp {
 
     /**
-     * Application entry point for UC7.
+     * Application entry point for UC9
      * @param args Command-line arguments
      */
     public static void main(String[] args) {
 
+        Scanner scanner = new Scanner(System.in);
 
-        String input = "refer";
-        System.out.println("Input: " + input);
+        System.out.print("Input: ");
+        String input = scanner.nextLine();
 
+        boolean result = check(input, 0, input.length() - 1);
 
-        Deque<Character> deque = new ArrayDeque<>();
+        System.out.println("Is Palindrome?");
+        System.out.println(result);
 
+        scanner.close();
+    }
 
-        for (char c : input.toCharArray()) {
-            deque.addLast(c);
+    /**
+     * Recursively checks whether a string is a palindrome
+     * @param s Input string
+     * @param start Starting index
+     * @param end Ending index
+     * @return true if palindrome, otherwise false
+     */
+    private static boolean check(String s, int start, int end) {
+
+        // Base condition: If start >= end, all characters matched
+        if (start >= end) {
+            return true;
         }
 
-
-        boolean isPalindrome = true;
-
-
-        while (deque.size() > 1) {
-
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
-
-            if (front != rear) {
-                isPalindrome = false;
-                break;
-            }
+        // If mismatch found
+        if (s.charAt(start) != s.charAt(end)) {
+            return false;
         }
 
-        System.out.println("Is Palindrome?: " + isPalindrome);
+        // Recursive call moving inward
+        return check(s, start + 1, end - 1);
     }
 }
